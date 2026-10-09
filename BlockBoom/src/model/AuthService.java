@@ -13,17 +13,14 @@ import data.UserManager;
 public class AuthService {
     private AuthService() { }
 
-    /** Returns an error message to show the user, or null if the account was created. */
-    public static String register(String username, String email, String password, String confirm) {
+
+    public static String register(String username, String password, String confirm) {
         username = username.trim();
-        email = email.trim();
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) return "Please fill in all fields.";
-        if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) return "Invalid email address.";
+        if (username.isEmpty()  || password.isEmpty()) return "Please fill in all fields.";
         if (password.length() < 4) return "Password must be at least 4 characters.";
         if (!password.equals(confirm)) return "Passwords do not match.";
         if (UserManager.findByUsername(username) != null) return "Username already taken.";
-        if (UserManager.findByEmail(email) != null) return "Email already registered.";
-        UserManager.add(new User(username, email, PasswordHasher.hash(password)));
+        UserManager.add(new User(username, password));
         return null;
     }
 
@@ -31,8 +28,7 @@ public class AuthService {
     public static User login(String identifier, String password) {
         identifier = identifier.trim();
         User user = UserManager.findByUsername(identifier);
-        if (user == null) user = UserManager.findByEmail(identifier);
         if (user == null) return null;
-        return user.getPasswordHash().equals(PasswordHasher.hash(password)) ? user : null;
+        return user.getPassword().equals(password) ? user : null;
     }
 }

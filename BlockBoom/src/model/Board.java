@@ -2,14 +2,7 @@ package model;
 
 import java.awt.Color;
 
-/**
- * Board.java
- *
- * Model class representing the 8x8 game grid.
- * Responsible ONLY for grid state and the rules for placing pieces
- * and clearing full rows/columns (Single Responsibility Principle).
- * Knows nothing about drawing, mouse input, or scoring.
- */
+
 public class Board {
     public static final int SIZE = 8;
 
