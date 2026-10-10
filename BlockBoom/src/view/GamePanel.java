@@ -31,16 +31,17 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     // ---- layout constants (pixels) - also reused by the other screens ----
     private static final int CELL = 40;
     private static final int BOARD_PX = CELL * Board.SIZE;
-    private static final int MARGIN = 35;
+    public static final int PANEL_W = 393;
+    public static final int PANEL_H = 800;
+    private static final int MARGIN = (PANEL_W - BOARD_PX) / 2;   // board is centred horizontally
+    private static final int HEADER_Y = 124;                       // Score / Best Score / Settings row
     private static final int BOARD_X = MARGIN;
-    private static final int BOARD_Y = 100;
-    private static final int TRAY_Y = BOARD_Y + BOARD_PX + 30;
-    private static final int TRAY_H = 120;
-    public static final int PANEL_W = BOARD_PX + 2 * MARGIN;
-    public static final int PANEL_H = TRAY_Y + TRAY_H + 40;
+    private static final int BOARD_Y = 232;
+    private static final int TRAY_Y = 600;
+    private static final int TRAY_H = 100;
     private static final int TRAY_SLOT_W = BOARD_PX / GameEngine.TRAY_SIZE;
-
-    private static final Rectangle SETTINGS_BUTTON = new Rectangle(PANEL_W - MARGIN - 40, 24, 40, 40);
+ 
+    private static final Rectangle SETTINGS_BUTTON = new Rectangle(PANEL_W - MARGIN - 40, HEADER_Y, 40, 40);
 
     // ---- navigation ----
     private final GameFrame frame;

@@ -5,16 +5,7 @@ import model.Session;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * GameFrame.java
- *
- * The top-level window. Owns a CardLayout that switches between the five
- * screens (Login / Sign up / Home / Game / Leaderboard) and exposes simple
- * navigation methods that the screens call - this is the only class that
- * knows how screen-switching actually works, so each screen panel stays
- * decoupled from the others (Single Responsibility again). It also owns
- * the Session (who is logged in).
- */
+
 public class GameFrame extends JFrame {
     public static final String LOGIN = "login";
     public static final String SIGN_UP = "signup";

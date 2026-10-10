@@ -50,7 +50,7 @@ public class HomePanel extends GradientPanel {
         logoutBtn.addActionListener(e -> frame.logout());
 
         column.add(new LogoLabel());
-        column.add(Box.createVerticalStrut(20));
+        column.add(Box.createVerticalStrut(10));
         column.add(nameLabel);
         column.add(Box.createVerticalStrut(4));
         column.add(nameField);

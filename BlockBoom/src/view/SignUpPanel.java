@@ -14,10 +14,10 @@ import java.awt.*;
  * the fields and shows the result.
  */
 public class SignUpPanel extends GradientPanel {
-    private final PlaceholderField usernameField = new PlaceholderField("Username");
-    private final PlaceholderField emailField = new PlaceholderField("Email");
-    private final PlaceholderPasswordField passwordField = new PlaceholderPasswordField("Password");
-    private final PlaceholderPasswordField confirmField = new PlaceholderPasswordField("Confirm Password");
+    private final PlaceholderField usernameField = new PlaceholderField("   Username");
+    private final PlaceholderField emailField = new PlaceholderField("   Email");
+    private final PlaceholderPasswordField passwordField = new PlaceholderPasswordField("   Password");
+    private final PlaceholderPasswordField confirmField = new PlaceholderPasswordField("   Confirm Password");
     private final JLabel errorLabel = new JLabel(" ");
     private final GameFrame frame;
 
@@ -29,33 +29,41 @@ public class SignUpPanel extends GradientPanel {
         JPanel column = new JPanel();
         column.setOpaque(false);
         column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
-        column.setPreferredSize(new Dimension(320, 560));
+        column.setPreferredSize(new Dimension(338, 706));
         column.add(new LogoLabel());
         column.add(Box.createVerticalStrut(10));
         column.add(buildCard());
-        column.add(Box.createVerticalGlue());
-        column.add(buildFooter());
+        
         Layouts.alignLeft(column);
         add(column);
+
+        GridBagConstraints gc = new GridBagConstraints();
+    gc.weightx = 1;
+    gc.weighty = 1;
+    gc.anchor = GridBagConstraints.NORTH;
+    gc.insets = new Insets(20, 0, 0, 0);
+    add(column, gc);
     }
 
     private JPanel buildCard() {
-        RoundedPanel card = new RoundedPanel(new Color(255, 255, 255, 235), 18);
+        RoundedPanel card = new RoundedPanel(new Color(255, 255, 255, 200), 18);
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
-        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 340));
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        card.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel title = new JLabel("Sign up");
-        title.setFont(Theme.font(Font.BOLD, 18));
+        title.setFont(Theme.font(Font.BOLD, 25));
         JLabel subtitle = new JLabel("Create your account");
-        subtitle.setFont(Theme.font(Font.PLAIN, 12));
+        subtitle.setFont(Theme.font(Font.PLAIN, 18));
         subtitle.setForeground(Theme.TEXT_MUTED);
 
         errorLabel.setForeground(Theme.RED);
         errorLabel.setFont(Theme.font(Font.PLAIN, 12));
 
         RoundedButton createButton = new RoundedButton("Create Account", Theme.GREEN);
-        createButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 42));
+        createButton.setPreferredSize(new Dimension(200, 58));
+        createButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 58));
         createButton.addActionListener(e -> doRegister());
         confirmField.addActionListener(e -> doRegister());
 
@@ -73,6 +81,8 @@ public class SignUpPanel extends GradientPanel {
         card.add(errorLabel);
         card.add(Box.createVerticalStrut(6));
         card.add(createButton);
+        card.add(Box.createVerticalGlue());
+        card.add(buildFooter());
         Layouts.alignLeft(card);
         return card;
     }
@@ -82,7 +92,7 @@ public class SignUpPanel extends GradientPanel {
         footer.setOpaque(false);
         footer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         JLabel text = new JLabel("Already have an account?");
-        text.setFont(Theme.font(Font.PLAIN, 12));
+        text.setFont(Theme.font(Font.PLAIN, 15));
         LinkButton login = new LinkButton("Login");
         login.addActionListener(e -> frame.showLogin());
         footer.add(text);
