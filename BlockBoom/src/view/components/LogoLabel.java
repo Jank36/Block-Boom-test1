@@ -1,44 +1,58 @@
 package view.components;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
-/** "Block Boom" title drawn as outlined text. */
+
 public class LogoLabel extends JComponent {
+    private static final int W = 395;
+    private static final int H = 222;
+
+    private final BufferedImage logo = loadLogo();
+
     public LogoLabel() {
-        setPreferredSize(new Dimension(320, 120));
-        setMaximumSize(new Dimension(320, 120));
+        setPreferredSize(new Dimension(W, H));
+        setMaximumSize(new Dimension(W, H));
         setAlignmentX(CENTER_ALIGNMENT);
     }
 
+    private static BufferedImage loadLogo() {
+    try (InputStream in = LogoLabel.class.getResourceAsStream("/img/img.png")) {
+        if (in == null) {
+            System.err.println("หาไฟล์ /img/img.png ไม่เจอ");
+            return null;
+        }
+        return ImageIO.read(in);
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
+
     @Override
     protected void paintComponent(Graphics g) {
+        if (logo == null) return;
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        int cx = getWidth() / 2;
-        drawOutlined(g2, "Block", new Font("Arial Black", Font.BOLD, 54), cx, 52, new Color(0xFFC800));
-        drawOutlined(g2, "Boom", new Font("Arial Black", Font.BOLD, 58), cx, 108, new Color(0x19B8FF));
-        g2.dispose();
-    }
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-    private void drawOutlined(Graphics2D g2, String text, Font font, int cx, int baseY, Color fill) {
-        Shape glyphs = font.createGlyphVector(g2.getFontRenderContext(), text).getOutline();
-        Rectangle2D b = glyphs.getBounds2D();
-        Shape s = AffineTransform.getTranslateInstance(cx - b.getWidth() / 2 - b.getX(), baseY)
-                .createTransformedShape(glyphs);
-        g2.setStroke(new BasicStroke(9f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        g2.setColor(new Color(0x1B2A8A));
-        g2.draw(s);
-        g2.setColor(fill);
-        g2.fill(s);
+        // ย่อรูปให้พอดีกรอบ โดยรักษาสัดส่วนเดิม และจัดกึ่งกลาง
+        double scale = Math.min((double) getWidth() / logo.getWidth(),
+                                (double) getHeight() / logo.getHeight());
+        int w = (int) (logo.getWidth() * scale);
+        int h = (int) (logo.getHeight() * scale);
+        int x = (getWidth() - w) / 2;
+        int y = (getHeight() - h) / 2;
+        g2.drawImage(logo, x, y, w, h, null);
+        g2.dispose();
     }
 }

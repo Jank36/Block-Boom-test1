@@ -10,7 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-/** Shared look + placeholder painting for the text fields. */
+
 final class FieldHint {
     private FieldHint() {}
 

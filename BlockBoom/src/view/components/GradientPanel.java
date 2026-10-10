@@ -6,7 +6,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-/** Screen background: light-blue vertical gradient. */
+
 public class GradientPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {

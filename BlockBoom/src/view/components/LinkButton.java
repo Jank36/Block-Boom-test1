@@ -9,7 +9,7 @@ import java.awt.Font;
 public class LinkButton extends JButton {
     public LinkButton(String text) {
         super(text);
-        setFont(Theme.font(Font.BOLD, 13));
+        setFont(Theme.font(Font.BOLD, 22));
         setForeground(new java.awt.Color(0x1E6BFF));
         setBorderPainted(false);
         setContentAreaFilled(false);
